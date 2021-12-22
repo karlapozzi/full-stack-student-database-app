@@ -36,4 +36,18 @@ export default class Data {
       throw new Error();
     }
   }
+
+  async getCourseDetail(id) {
+    const response = await this.api(`/courses/${id}`, 'GET')
+    if (response.status === 200) {
+      let data = await response.json().then(data => data);
+      return data;
+    }
+    else if (response.status === 401) {
+      return null;
+    }
+    else {
+      throw new Error();
+    }
+  }
 }

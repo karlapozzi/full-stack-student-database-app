@@ -41,6 +41,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
   const courses = await Course.findAll({
     // Filter out created_at and updated_at
     attributes: [
+      'id',
       'title', 
       'description', 
       'estimatedTime', 

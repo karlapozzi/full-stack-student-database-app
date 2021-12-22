@@ -21,9 +21,9 @@ export class Provider extends Component {
     const value = {
       authenticatedUser,
       data: this.data,
-      actions: {
-        getCourses: this.getCourses
-      }
+      // actions: {
+
+      // }
     };
 
     return (
@@ -31,11 +31,6 @@ export class Provider extends Component {
         {this.props.children}
       </Context.Provider>  
     );
-  }
-  
-  getCourses = async () => {
-    const courses = await this.data.getCourses();
-    return courses;
   }
 
 }
