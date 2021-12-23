@@ -81,6 +81,22 @@ export default class Data {
     }
   }
 
+  async createCourse(course) {
+    const response = await this.api('/courses', 'POST', course);
+    if (response.status === 201) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        console.log(data.errors);
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+
   async deleteCourse(id) {
     const response = await this.api(`/courses/${id}`, 'DELETE')
     if (response.status === 204) {

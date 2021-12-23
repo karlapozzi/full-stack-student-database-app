@@ -9,6 +9,7 @@ import {
 
 import Header from './components/Header';
 import Courses from './components/Courses';
+import CreateCourse from './components/CreateCourse';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
@@ -16,6 +17,7 @@ import withContext from './Context';
 
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
+const CreateCourseWithContext = withContext(CreateCourse);
 const CourseDetailWithContext = withContext(CourseDetail);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp)
@@ -28,6 +30,7 @@ export default () => (
       <Switch>
         <Redirect exact from='/' to='/courses' />
         <Route exact path="/courses" component={CoursesWithContext} />
+        <Route exact path="/courses/create" component={CreateCourseWithContext} />
         <Route path="/courses/:id" component={CourseDetailWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
