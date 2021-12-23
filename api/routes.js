@@ -52,7 +52,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['firstName', 'lastName']
+        attributes: ['id', 'firstName', 'lastName']
       }
     ]
   });
