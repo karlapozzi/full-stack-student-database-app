@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const UserSignUp = ({ context }) => {
   const [firstName, setFirstName] = useState('');
@@ -9,7 +9,6 @@ const UserSignUp = ({ context }) => {
   const [errors, setErrors] = useState([]);
 
   let history = useHistory();
-  // let location = useLocation();
 
   const change = (event) => {
     const target = event.target.name;
@@ -29,7 +28,6 @@ const UserSignUp = ({ context }) => {
   }
 
   const submit = (event) => {
-    // const { from } = location.state || { from: { pathname: '/courses' } };
     event.preventDefault();
 
     const user = {
@@ -81,14 +79,14 @@ const UserSignUp = ({ context }) => {
           <input 
             id="firstName" 
             name="firstName" 
-            type="test" 
+            type="text" 
             value={firstName}
             onChange={change} />
           <label htmlFor="lastName">Last Name</label>
           <input 
             id="lastName" 
             name="lastName" 
-            type="test" 
+            type="text" 
             value={lastName}
             onChange={change} />
           <label htmlFor="emailAddress">Email Address</label>
