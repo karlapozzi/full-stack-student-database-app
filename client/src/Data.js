@@ -97,15 +97,20 @@ export default class Data {
     }
   }
 
+  async updateCourse(id, course) {
+    const response = await this.api(`/courses/${id}`, 'PUT', course)
+    if (response.status === 204 || 403 || 401) {
+      return response.status;
+    } else {
+      throw new Error();
+    }
+  }
+
   async deleteCourse(id) {
     const response = await this.api(`/courses/${id}`, 'DELETE')
-    if (response.status === 204) {
+    if (response.status === 204 || 403 || 401) {
       return response.status;
-    }
-    else if (response.status === 401) {
-      return response.status;
-    }
-    else {
+    } else {
       throw new Error();
     }
   }

@@ -19,7 +19,7 @@ const CourseDetail = ({context}) => {
           console.log(`${course.title} was successfully deleted!`);
           history.push('/courses');
         } 
-        if (status === 401) {
+        if (status === 403 || 401) {
           setErrors(() => {
             return { errors: [ "Only instructors can delete their courses" ] };
           })
@@ -37,10 +37,10 @@ const CourseDetail = ({context}) => {
 
   useEffect(() => {
     context.data.getCourseDetail(id)
-        .then(data => {
-          setCourse(data)
-          setInstructor(data.User)
-        })
+      .then(data => {
+        setCourse(data)
+        setInstructor(data.User)
+      })
   }, [])
 
   return (
