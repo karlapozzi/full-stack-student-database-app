@@ -66,11 +66,11 @@ const UserSignUp = ({ context }) => {
     <main>
       <div className="form--centered">
         <h2>Sign Up</h2>
-        {errors.length > 0 ? 
+        {errors.errors ? 
           <div className="validation--errors">
             <h3>Validation Errors</h3>
             <ul>
-              {errors.map((error, i) => <li key={i}>{error}</li>)}
+              {errors.errors.map((error, i) => <li key={i}>{error}</li>)}
             </ul>
           </div>
           :
