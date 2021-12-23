@@ -12,7 +12,7 @@ const Header = ({context}) => {
         <nav>
         {authUser ?
           <ul className="header--signedin">
-              <li>Welcome, {authUser.name}!</li>
+              <li>Welcome, {authUser.firstName}!</li>
               <li><a href="/signout">Sign Out</a></li>
           </ul>
           :

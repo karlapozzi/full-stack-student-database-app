@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
-const UserSignIn = ({ context }) => {
+const UserSignUp = ({ context }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
@@ -12,6 +14,12 @@ const UserSignIn = ({ context }) => {
   const change = (event) => {
     const target = event.target.name;
     const value = event.target.value;
+    if (target === 'firstName'){
+      setFirstName(value)
+    }
+    if (target === 'lastName'){
+      setLastName(value)
+    }
     if (target === 'emailAddress'){
       setEmailAddress(value)
     }
@@ -24,16 +32,23 @@ const UserSignIn = ({ context }) => {
     // const { from } = location.state || { from: { pathname: '/courses' } };
     event.preventDefault();
 
-    context.actions.signIn(emailAddress, password)
-      .then( (user) => {
-        if (user === null) {
-          setErrors(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] };
-          });
+    const user = {
+      firstName,
+      lastName,
+      emailAddress,
+      password
+    }
+
+    context.data.createUser(user)
+      .then( errors => {
+        if (errors.length) {
+          setErrors({ errors });
         } else {
-          // console.log(from)
-          history.push('/courses');
-          console.log(`SUCCESS ${emailAddress} is now signed in!`);
+          console.log(`${emailAddress} is successfully signed up and authenticated!`);
+          context.actions.signIn(emailAddress, password)
+            .then(() => {
+              history.push('/courses');
+            });
         }
       })
       .catch(err => {
@@ -50,7 +65,7 @@ const UserSignIn = ({ context }) => {
   return (
     <main>
       <div className="form--centered">
-        <h2>Sign In</h2>
+        <h2>Sign Up</h2>
         {errors.length > 0 ? 
           <div className="validation--errors">
             <h3>Validation Errors</h3>
@@ -62,6 +77,20 @@ const UserSignIn = ({ context }) => {
           <div></div>
         }
         <form onSubmit={submit}>
+          <label htmlFor="firstName">First Name</label>
+          <input 
+            id="firstName" 
+            name="firstName" 
+            type="test" 
+            value={firstName}
+            onChange={change} />
+          <label htmlFor="lastName">Last Name</label>
+          <input 
+            id="lastName" 
+            name="lastName" 
+            type="test" 
+            value={lastName}
+            onChange={change} />
           <label htmlFor="emailAddress">Email Address</label>
           <input 
             id="emailAddress" 
@@ -76,13 +105,13 @@ const UserSignIn = ({ context }) => {
             type="password" 
             value={password}
             onChange={change} />
-          <button className="button" type="submit">Sign In</button>
+          <button className="button" type="submit">Sign Up</button>
           <button className="button button-secondary" onClick={cancel}>Cancel</button>
         </form>
-        <p>Don't have a user account? Click here to <a href="/signup">sign up</a>!</p>
+        <p>Already have a user account? Click here to <a href="/signin">sign in</a>!</p>
       </div>
     </main>
   );
 }
 
-export default UserSignIn;
+export default UserSignUp;
