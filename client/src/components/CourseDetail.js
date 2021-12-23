@@ -1,12 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
 
 const CourseDetail = ({context}) => {
   const [course, setCourse] = useState([]);
   const [instructor, setInstructor] = useState([]);
+  const [errors, setErrors] = useState([]);
   const { id } = useParams();
+  let history = useHistory();
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    context.data.deleteCourse(id)
+      .then( (status) => {
+        console.log(status)
+        if (status === 204) {
+          console.log(`${course.title} was successfully deleted!`);
+          history.push('/courses');
+        } 
+        if (status === 401) {
+          setErrors(() => {
+            return { errors: [ "Only instructors can delete their courses" ] };
+          })
+        } else {
+          setErrors(() => {
+            return { errors: [ "Something went wrong, try again later." ] };
+          })
+        }
+    })
+    .catch(err => {
+      console.log(err);
+      history.push('/error');
+    })
+  }
 
   useEffect(() => {
     context.data.getCourseDetail(id)
@@ -20,13 +47,23 @@ const CourseDetail = ({context}) => {
     <main>
       <div className="actions--bar">
           <div className="wrap">
-              <a className="button" href="update-course.html">Update Course</a>
-              <a className="button" href="/delete-course">Delete Course</a>
+              <a className="button" href={`/courses/${id}/update`}>Update Course</a>
+              <a className="button" href="#" onClick={handleDelete}>Delete Course</a>
               <a className="button button-secondary" href="/courses">Return to List</a>
           </div>
       </div>
             
       <div className="wrap">
+          {errors.errors ? 
+            <div className="validation--errors">
+              <h1>Validation Errors</h1>
+              <ul>
+                {errors.errors.map((error, i) => <li key={i}>{error}</li>)}
+              </ul>
+            </div>
+            :
+            <div></div>
+          }
           <h2>Course Detail</h2>
           <form>
               <div className="main--flex">

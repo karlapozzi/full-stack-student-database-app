@@ -44,6 +44,7 @@ export default class Data {
     }
     else if (response.status === 400) {
       return response.json().then(data => {
+        console.log(data.errors);
         return data.errors;
       });
     }
@@ -74,6 +75,19 @@ export default class Data {
     }
     else if (response.status === 401) {
       return null;
+    }
+    else {
+      throw new Error();
+    }
+  }
+
+  async deleteCourse(id) {
+    const response = await this.api(`/courses/${id}`, 'DELETE')
+    if (response.status === 204) {
+      return response.status;
+    }
+    else if (response.status === 401) {
+      return response.status;
     }
     else {
       throw new Error();
