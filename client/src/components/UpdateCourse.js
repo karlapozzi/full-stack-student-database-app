@@ -42,11 +42,13 @@ const UpdateCourse = ({context}) => {
     }
 
     context.data.updateCourse(id, course, emailAddress, password)
-      .then( (status) => {
-        if (status === 204) {
+      .then( errors => {
+        if (errors.length) {
+          setErrors({ errors });
+        } else {
           // console.log(`${title} was successfully updated!`);
           history.push(`/courses/${id}`);
-        } 
+        }
       })
       .catch(err => {
         console.log(err);
@@ -62,9 +64,11 @@ const UpdateCourse = ({context}) => {
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {
+        //if the response is a 404, go to not found
         if (data === 404) {
           history.push('/notfound')
         } else {
+          //only show course info if the course user id matches the auth user id, otherwise go to forbidden
           if (data.userId === context.authenticatedUser.id) {
             setTitle(data.title)
             setDescription(data.description)
@@ -80,7 +84,7 @@ const UpdateCourse = ({context}) => {
         console.log(err);
         history.push('/error');
       })
-  }, [context, id])
+  }, [context, id, history])
 
 
   return (
