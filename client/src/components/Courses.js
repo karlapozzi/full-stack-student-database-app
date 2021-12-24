@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 
 
 const Courses = ({ context }) => {
   const [courses, setCourses] = useState([]);
+
+  const history = useHistory();
   
   useEffect(() => {
     context.data.getCourses()
         .then(data => setCourses(data))
-  }, [context]);
+        .catch(err => {
+          console.log(err);
+          history.push('/error');
+        })
+  }, [context, history]);
 
   return (
     <main>

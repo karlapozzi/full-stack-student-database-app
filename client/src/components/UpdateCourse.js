@@ -47,15 +47,6 @@ const UpdateCourse = ({context}) => {
           // console.log(`${title} was successfully updated!`);
           history.push(`/courses/${id}`);
         } 
-        if (status === 403 || 401) {
-          setErrors(() => {
-            return { errors: [ "Only instructors can update their courses" ] };
-          })
-        } else {
-          setErrors(() => {
-            return { errors: [ "Something went wrong, try again later." ] };
-          })
-        }
       })
       .catch(err => {
         console.log(err);
@@ -71,11 +62,23 @@ const UpdateCourse = ({context}) => {
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {
-        setTitle(data.title)
-        setDescription(data.description)
-        setEstimatedTime(data.estimatedTime)
-        setMaterialsNeeded(data.materialsNeeded)
-        setInstructor(data.User)
+        if (data === 404) {
+          history.push('/notfound')
+        } else {
+          if (data.userId === context.authenticatedUser.id) {
+            setTitle(data.title)
+            setDescription(data.description)
+            setEstimatedTime(data.estimatedTime)
+            setMaterialsNeeded(data.materialsNeeded)
+            setInstructor(data.User)
+          } else {
+            history.push('/forbidden');
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        history.push('/error');
       })
   }, [context, id])
 

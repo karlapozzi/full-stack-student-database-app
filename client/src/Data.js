@@ -1,3 +1,5 @@
+import { Redirect } from 'react-router-dom';
+
 const apiUrl = 'http://localhost:5000/api';
 
 export default class Data {
@@ -57,11 +59,7 @@ export default class Data {
     if (response.status === 200) {
       let data = await response.json().then(data => data);
       return data;
-    }
-    else if (response.status === 401) {
-      return null;
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
@@ -71,10 +69,10 @@ export default class Data {
     if (response.status === 200) {
       let data = await response.json().then(data => data);
       return data;
-    }
-    else if (response.status === 401) {
-      return null;
-    }
+    } 
+    else if (response.status === 404) {
+      return response.status;
+    } 
     else {
       throw new Error();
     }
@@ -97,7 +95,7 @@ export default class Data {
 
   async updateCourse(id, course, emailAddress, password) {
     const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password})
-    if (response.status === 204 || 403 || 401) {
+    if (response.status === 204) {
       return response.status;
     } else {
       throw new Error();

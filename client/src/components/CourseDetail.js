@@ -29,16 +29,24 @@ const CourseDetail = ({context}) => {
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {
+        if (data === 404) {
+          history.push('/notfound')
+        } else {
         setCourse(data)
         setInstructor(data.User)
+        }
       })
-  }, [context, id])
+      .catch(err => {
+        console.log(err);
+        history.push('/error');
+      })
+  }, [context, id, history])
 
   return (
     <main>
       <div className="actions--bar">
           <div className="wrap">
-            { (context.authenticatedUser.id === course.userId)
+            { (context.authenticatedUser && context.authenticatedUser.id === course.userId)
               ? 
               <>
               <a className="button" href={`/courses/${id}/update`}>Update Course</a>
