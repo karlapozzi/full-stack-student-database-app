@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-
 
 const UpdateCourse = ({context}) => {
   const [title, setTitle] = useState('');
@@ -12,6 +10,7 @@ const UpdateCourse = ({context}) => {
   const [instructor, setInstructor] = useState([]);
 
   const { id } = useParams();
+  const { emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
 
   const change = (event) => {
@@ -42,11 +41,10 @@ const UpdateCourse = ({context}) => {
       userId: instructor.id
     }
 
-    context.data.updateCourse(course)
+    context.data.updateCourse(id, course, emailAddress, password)
       .then( (status) => {
-        console.log(status)
         if (status === 204) {
-          console.log(`${title} was successfully updated!`);
+          // console.log(`${title} was successfully updated!`);
           history.push(`/courses/${id}`);
         } 
         if (status === 403 || 401) {
@@ -79,7 +77,7 @@ const UpdateCourse = ({context}) => {
         setMaterialsNeeded(data.materialsNeeded)
         setInstructor(data.User)
       })
-  }, [])
+  }, [context, id])
 
 
   return (

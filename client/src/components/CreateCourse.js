@@ -8,6 +8,7 @@ const CreateCourse = ({ context }) => {
   const [materialsNeeded, setMaterialsNeeded] = useState('');
   const [errors, setErrors] = useState([]);
 
+  const { firstName, lastName, emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
 
   const change = (event) => {
@@ -38,12 +39,12 @@ const CreateCourse = ({ context }) => {
       userId: context.authenticatedUser.id
     }
 
-    context.data.createCourse(course)
+    context.data.createCourse(course, emailAddress, password)
       .then( errors => {
         if (errors.length) {
           setErrors({ errors });
         } else {
-          console.log(`${title} was successfully created!`);
+          // console.log(`${title} was successfully created!`);
           history.push('/courses');
         }
       })
@@ -83,7 +84,7 @@ const CreateCourse = ({ context }) => {
                   value={title}
                   onChange={change} />
                 
-                <p>By {context.authenticatedUser.firstName} {context.authenticatedUser.lastName}</p>
+                <p>By {firstName} {lastName}</p>
 
                 <label htmlFor="courseDescription">Course Description</label>
                 <textarea

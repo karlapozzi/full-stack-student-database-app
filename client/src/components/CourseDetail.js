@@ -7,16 +7,17 @@ const CourseDetail = ({context}) => {
   const [course, setCourse] = useState([]);
   const [instructor, setInstructor] = useState([]);
   const [errors, setErrors] = useState([]);
+
   const { id } = useParams();
+  const { emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
 
   const handleDelete = (event) => {
     event.preventDefault();
-    context.data.deleteCourse(id)
+    context.data.deleteCourse(id, emailAddress, password)
       .then( (status) => {
-        console.log(status)
         if (status === 204) {
-          console.log(`${course.title} was successfully deleted!`);
+          // console.log(`${course.title} was successfully deleted!`);
           history.push('/courses');
         } 
         if (status === 403 || 401) {
@@ -41,7 +42,7 @@ const CourseDetail = ({context}) => {
         setCourse(data)
         setInstructor(data.User)
       })
-  }, [])
+  }, [context, id])
 
   return (
     <main>
