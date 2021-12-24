@@ -15,6 +15,7 @@ import UpdateCourse from './components/UpdateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
+import PrivateRoute from './PrivateRoute';
 import withContext from './Context';
 
 const HeaderWithContext = withContext(Header);
@@ -34,9 +35,9 @@ export default () => (
       <Switch>
         <Redirect exact from='/' to='/courses' />
         <Route exact path="/courses" component={CoursesWithContext} />
-        <Route exact path="/courses/create" component={CreateCourseWithContext} />
+        <PrivateRoute exact path="/courses/create" component={CreateCourseWithContext} />
         <Route exact path="/courses/:id" component={CourseDetailWithContext} />
-        <Route exact path="/courses/:id/update" component={UpdateCourseWithContext} />
+        <PrivateRoute exact path="/courses/:id/update" component={UpdateCourseWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
