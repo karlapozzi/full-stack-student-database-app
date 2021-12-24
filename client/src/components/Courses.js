@@ -5,9 +5,10 @@ const Courses = ({ context }) => {
   const [courses, setCourses] = useState([]);
   
   useEffect(() => {
+    console.log('test')
     context.data.getCourses()
         .then(data => setCourses(data))
-  }, []);
+  }, [context]);
 
   return (
     <main>

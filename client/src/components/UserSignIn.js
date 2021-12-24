@@ -32,7 +32,6 @@ const UserSignIn = ({ context }) => {
           });
         } else {
           // console.log(from)
-          console.log(user);
           history.push('/courses');
           console.log(`SUCCESS ${emailAddress} is now signed in!`);
         }

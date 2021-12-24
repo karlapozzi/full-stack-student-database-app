@@ -42,7 +42,7 @@ const UserSignUp = ({ context }) => {
         if (errors.length) {
           setErrors({ errors });
         } else {
-          console.log(`${emailAddress} is successfully signed up and authenticated!`);
+          // console.log(`${emailAddress} is successfully signed up and authenticated!`);
           context.actions.signIn(emailAddress, password)
             .then(() => {
               history.push('/courses');
