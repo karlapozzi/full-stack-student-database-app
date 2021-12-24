@@ -7,7 +7,7 @@ const UserSignIn = ({ context }) => {
   const [errors, setErrors] = useState([]);
 
   let history = useHistory();
-  // let location = useLocation();
+  let location = useLocation();
 
   const change = (event) => {
     const target = event.target.name;
@@ -21,7 +21,7 @@ const UserSignIn = ({ context }) => {
   }
 
   const submit = (event) => {
-    // const { from } = location.state || { from: { pathname: '/courses' } };
+    const { from } = location.state || { from: { pathname: '/courses' } };
     event.preventDefault();
 
     context.actions.signIn(emailAddress, password)
@@ -31,8 +31,7 @@ const UserSignIn = ({ context }) => {
             return { errors: [ 'Sign-in was unsuccessful' ] };
           });
         } else {
-          // console.log(from)
-          history.push('/courses');
+          history.push(from);
           console.log(`SUCCESS ${emailAddress} is now signed in!`);
         }
       })
