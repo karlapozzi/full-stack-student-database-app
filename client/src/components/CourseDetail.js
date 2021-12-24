@@ -6,7 +6,6 @@ import ReactMarkdown from 'react-markdown';
 const CourseDetail = ({context}) => {
   const [course, setCourse] = useState([]);
   const [instructor, setInstructor] = useState([]);
-  const [errors, setErrors] = useState([]);
 
   const { id } = useParams();
   let history = useHistory();
@@ -20,20 +19,11 @@ const CourseDetail = ({context}) => {
           // console.log(`${course.title} was successfully deleted!`);
           history.push('/courses');
         } 
-        if (status === 403 || 401) {
-          setErrors(() => {
-            return { errors: [ "Only instructors can delete their courses" ] };
-          })
-        } else {
-          setErrors(() => {
-            return { errors: [ "Something went wrong, try again later." ] };
-          })
-        }
-    })
-    .catch(err => {
-      console.log(err);
-      history.push('/error');
-    })
+      })
+      .catch(err => {
+        console.log(err);
+        history.push('/error');
+      })
   }
 
   useEffect(() => {
@@ -64,7 +54,6 @@ const CourseDetail = ({context}) => {
             
       <div className="wrap">
           <h2>Course Detail</h2>
-          {context.actions.showErrors(errors)}
           <form>
               <div className="main--flex">
                   <div>
