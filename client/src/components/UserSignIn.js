@@ -32,7 +32,7 @@ const UserSignIn = ({ context }) => {
           });
         } else {
           history.push(from);
-          console.log(`SUCCESS ${emailAddress} is now signed in!`);
+          // console.log(`SUCCESS ${emailAddress} is now signed in!`);
         }
       })
       .catch(err => {

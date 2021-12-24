@@ -37,7 +37,9 @@ export class Provider extends Component {
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
+      //Save password with authenticatedUser info
       this.setState(() => {return { authenticatedUser: {...user, ...{password} }}});
+      //Save authenticatedUser info in a cookie (this isn't secure, but I'll learn more about that later!)
       Cookies.set('authenticatedUser', JSON.stringify(this.state.authenticatedUser), { expires: 1 });
 
     }

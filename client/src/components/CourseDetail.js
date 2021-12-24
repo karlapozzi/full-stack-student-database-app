@@ -29,6 +29,7 @@ const CourseDetail = ({context}) => {
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {
+        //if the response is a 404 go to not found, else populate course info
         if (data === 404) {
           history.push('/notfound')
         } else {
@@ -46,6 +47,7 @@ const CourseDetail = ({context}) => {
     <main>
       <div className="actions--bar">
           <div className="wrap">
+            {/* if there is an authenticated user AND their id matches the course id, show Update and Delete buttons */}
             { (context.authenticatedUser && context.authenticatedUser.id === course.userId)
               ? 
               <>
