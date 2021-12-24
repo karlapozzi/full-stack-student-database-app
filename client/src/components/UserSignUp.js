@@ -64,16 +64,7 @@ const UserSignUp = ({ context }) => {
     <main>
       <div className="form--centered">
         <h2>Sign Up</h2>
-        {errors.errors ? 
-          <div className="validation--errors">
-            <h3>Validation Errors</h3>
-            <ul>
-              {errors.errors.map((error, i) => <li key={i}>{error}</li>)}
-            </ul>
-          </div>
-          :
-          <div></div>
-        }
+        {context.actions.showErrors(errors)}
         <form onSubmit={submit}>
           <label htmlFor="firstName">First Name</label>
           <input 

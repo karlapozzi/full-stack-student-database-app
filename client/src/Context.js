@@ -22,7 +22,8 @@ export class Provider extends Component {
       data: this.data,
       actions: {
         signIn: this.signIn,
-        signOut: this.signOut
+        signOut: this.signOut, 
+        showErrors: this.showErrors
       }
     };
 
@@ -46,6 +47,19 @@ export class Provider extends Component {
   signOut = () => {
     this.setState({ authenticatedUser: null });
     Cookies.remove('authenticatedUser');
+  }
+
+  showErrors = (errors) => {
+    if (errors.errors) {
+      return (
+        <div className="validation--errors">
+          <h3>Validation Errors</h3>
+          <ul>
+            {errors.errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+        </div>
+      )
+    }
   }
 
 }
