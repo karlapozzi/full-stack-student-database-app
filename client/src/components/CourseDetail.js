@@ -9,10 +9,10 @@ const CourseDetail = ({context}) => {
   const [errors, setErrors] = useState([]);
 
   const { id } = useParams();
-  const { emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
 
   const handleDelete = (event) => {
+    const { emailAddress, password } = context.authenticatedUser;
     event.preventDefault();
     context.data.deleteCourse(id, emailAddress, password)
       .then( (status) => {
@@ -48,24 +48,23 @@ const CourseDetail = ({context}) => {
     <main>
       <div className="actions--bar">
           <div className="wrap">
+            { (context.authenticatedUser.id === course.userId)
+              ? 
+              <>
               <a className="button" href={`/courses/${id}/update`}>Update Course</a>
               <a className="button" href="#" onClick={handleDelete}>Delete Course</a>
               <a className="button button-secondary" href="/courses">Return to List</a>
+              </>
+              :
+              <a className="button button-secondary" href="/courses">Return to List</a>
+            }
+              
           </div>
       </div>
             
       <div className="wrap">
-          {errors.errors ? 
-            <div className="validation--errors">
-              <h3>Validation Errors</h3>
-              <ul>
-                {errors.errors.map((error, i) => <li key={i}>{error}</li>)}
-              </ul>
-            </div>
-            :
-            <div></div>
-          }
           <h2>Course Detail</h2>
+          {context.actions.showErrors(errors)}
           <form>
               <div className="main--flex">
                   <div>
