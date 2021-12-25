@@ -1,5 +1,3 @@
-import { Redirect } from 'react-router-dom';
-
 const apiUrl = 'http://localhost:5000/api';
 
 export default class Data {
