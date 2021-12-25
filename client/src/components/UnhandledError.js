@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Create page to show when the API returns a server error or other unhandled response status
 export default function UnhandledError() {
   return (
     <main>

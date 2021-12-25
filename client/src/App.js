@@ -7,6 +7,7 @@ import {
   Redirect
 } from 'react-router-dom';
 
+//Import all components
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
@@ -23,6 +24,7 @@ import NotFound from './components/NotFound';
 import PrivateRoute from './PrivateRoute';
 import withContext from './Context';
 
+//Give components access to context via withContext function
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CreateCourseWithContext = withContext(CreateCourse);

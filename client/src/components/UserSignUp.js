@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+
+//Create and show form for user sign up
 const UserSignUp = ({ context }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -10,6 +12,7 @@ const UserSignUp = ({ context }) => {
 
   let history = useHistory();
 
+  //As fields are filled in, update corresponding state values
   const change = (event) => {
     const target = event.target.name;
     const value = event.target.value;
@@ -27,6 +30,7 @@ const UserSignUp = ({ context }) => {
     }
   }
 
+  //When the form is submitted, send user info to the API to create a new user
   const submit = (event) => {
     event.preventDefault();
 
@@ -37,6 +41,7 @@ const UserSignUp = ({ context }) => {
       password
     }
 
+    //If the API returns errors, populate validation errors variable, otherwise sign the user in and take them to /courses
     context.data.createUser(user)
       .then( errors => {
         if (errors.length) {
@@ -55,6 +60,7 @@ const UserSignUp = ({ context }) => {
       })
   }
 
+  //Function to send users to index when cancel is clicked
   const cancel = (event) => {
     event.preventDefault();
     history.push('/');
@@ -64,6 +70,7 @@ const UserSignUp = ({ context }) => {
     <main>
       <div className="form--centered">
         <h2>Sign Up</h2>
+        {/* If errors are returned when trying to sign up, they'll appear here */}
         {context.actions.showErrors(errors)}
         <form onSubmit={submit}>
           <label htmlFor="firstName">First Name</label>

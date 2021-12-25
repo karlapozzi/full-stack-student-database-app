@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Create page to show when a user doesn't have permission to access something
 export default function Forbidden() {
   return (
     <main>

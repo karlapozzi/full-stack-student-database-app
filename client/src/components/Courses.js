@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 
-
+//Show a full list of all courses
 const Courses = ({ context }) => {
   const [courses, setCourses] = useState([]);
 
   const history = useHistory();
   
+  //When the page is loaded, get course data and populate state variable to render courses
   useEffect(() => {
     context.data.getCourses()
         .then(data => setCourses(data))

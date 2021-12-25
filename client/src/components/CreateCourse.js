@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+//Show a create course form 
 const CreateCourse = ({ context }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -11,6 +12,7 @@ const CreateCourse = ({ context }) => {
   const { firstName, lastName, emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
 
+  //When the form data is changed (filled in, edited, etc.), update each corresponding state variable
   const change = (event) => {
     const target = event.target.name;
     const value = event.target.value;
@@ -28,6 +30,7 @@ const CreateCourse = ({ context }) => {
     }
   }
 
+  //When the form is submitted, send the new course info to the API
   const submit = (event) => {
     event.preventDefault();
 
@@ -54,6 +57,7 @@ const CreateCourse = ({ context }) => {
       })
   }
 
+  //When cancel is clicked, go back to index
   const cancel = (event) => {
     event.preventDefault();
     history.push('/');
@@ -63,6 +67,7 @@ const CreateCourse = ({ context }) => {
     <main>
       <div className="wrap">
         <h2>Create Course</h2>
+        {/* If there are errors when the form is submitted, errors will show here */}
         {context.actions.showErrors(errors)}
         <form onSubmit={submit}>
           <div className="main--flex">

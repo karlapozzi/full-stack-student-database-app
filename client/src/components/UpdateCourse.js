@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+//Create form for updating course info
 const UpdateCourse = ({context}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -12,7 +13,8 @@ const UpdateCourse = ({context}) => {
   const { id } = useParams();
   const { emailAddress, password } = context.authenticatedUser;
   let history = useHistory();
-
+  
+  //Function to update state values for each field as form data is edited
   const change = (event) => {
     const target = event.target.name;
     const value = event.target.value;
@@ -30,6 +32,7 @@ const UpdateCourse = ({context}) => {
     }
   }
 
+  //Function to submit form to update course info
   const submit = (event) => {
     event.preventDefault();
 
@@ -56,11 +59,13 @@ const UpdateCourse = ({context}) => {
       })
   }
 
+  //Function to send users back to index if cancel is clicked
   const cancel = (event) => {
     event.preventDefault();
     history.push('/');
   }
 
+  //When the page loads, get the existing course data and populate state variables to display the current course info
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {
@@ -91,6 +96,7 @@ const UpdateCourse = ({context}) => {
     <main>
       <div className="wrap">
         <h2>Update Course</h2>
+        {/* If errors are returned when submitting the form, they'll show here */}
         {context.actions.showErrors(errors)}
         <form onSubmit={submit}>
           <div className="main--flex">

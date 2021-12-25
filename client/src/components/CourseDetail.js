@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
-
+//Show an individual course
 const CourseDetail = ({context}) => {
   const [course, setCourse] = useState([]);
   const [instructor, setInstructor] = useState([]);
@@ -10,6 +10,7 @@ const CourseDetail = ({context}) => {
   const { id } = useParams();
   let history = useHistory();
 
+  //Function for delete button, if delete is successful it redirects back to /courses
   const handleDelete = (event) => {
     const { emailAddress, password } = context.authenticatedUser;
     event.preventDefault();
@@ -26,6 +27,7 @@ const CourseDetail = ({context}) => {
       })
   }
 
+  //When the page is loaded, get courses details from the API and set state variables to render in the HTML
   useEffect(() => {
     context.data.getCourseDetail(id)
       .then(data => {

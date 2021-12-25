@@ -34,6 +34,9 @@ export class Provider extends Component {
     );
   }
 
+  //Function to handle user sign in that verifies user email and password via the API
+  //If the user is verified/authorized, store user info in the authenticatedUser state
+  //This function exists in the context so that all other components will be able to access the user state
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
@@ -46,11 +49,16 @@ export class Provider extends Component {
     return user;
   }
 
+  //Function to handle user sign out
+  //Sets authenticated user sign out to null and removes cookies
+  //This function exists in the context so that the authenticatedUser state can be updated (and therefore sent to all components too)
   signOut = () => {
     this.setState({ authenticatedUser: null });
     Cookies.remove('authenticatedUser');
   }
 
+  //Function to handle validation errors on multiple forms (sign in, sign up, create course, and update course)
+  //This function exists in the context so that the code doesn't have to be repeated multiple places
   showErrors = (errors) => {
     if (errors.errors) {
       return (
